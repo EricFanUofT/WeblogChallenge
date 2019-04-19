@@ -60,10 +60,4 @@ object WebLogChallenge {
       .withColumn("session_number", sum(col("diff_session")).over(windowSpec))
     sessionDF
   }
-  def avgSessionTime(sessionDF: DataFrame, spark: SparkSession)={
-    sessionDF.createOrReplaceTempView("df_temp")
-    spark.sql("SELECT ip, session_number, max(unix_time)-min(unix_time) session_time from df_temp GROUP BY ip, session_number")
-      .createOrReplaceTempView("df_temp")
-
-  }
 }
